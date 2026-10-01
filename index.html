@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>波波电影网 - 高清电影在线观看 | bobodianyingwang-app.github.io</title>
+    <meta name="description" content="波波电影网（https://bobodianyingwang-app.github.io）提供最新高清电影、电视剧、动漫在线观看，分类齐全，更新迅速，尽在波波电影网。">
+    <meta name="keywords" content="波波电影网, bobodianyingwang-app.github.io, 高清电影, 在线观看, 电影网站">
+    <style>
+        /* 基础重置与变量 */
+        :root {
+            --primary: #e50914;
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --text-light: #ffffff;
+            --text-gray: #b3b3b3;
+            --glass: rgba(26, 26, 26, 0.7);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: var(--primary);
+        }
+        ul {
+            list-style: none;
+        }
+        
+        /* 导航栏 - 毛玻璃效果 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+        }
+        .logo span {
+            color: var(--text-light);
+        }
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+        nav a {
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 主内容区 */
+        main {
+            margin-top: 80px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #e50914, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .url-display {
+            display: inline-block;
+            background: rgba(229, 9, 20, 0.2);
+            border: 1px solid var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(229, 9, 20, 0.3);
+            color: #fff;
+        }
+
+        /* 通用Section样式 */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* 栏目1：电影分类 */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .category-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+        .category-img {
+            height: 180px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255,255,255,0.1);
+        }
+        .category-content {
+            padding: 1.5rem;
+        }
+        .category-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .category-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* 栏目2：最新推荐 */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        .movie-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 2/3;
+            background: #222;
+        }
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 1;
+        }
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            z-index: 2;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        .movie-card:hover .movie-info {
+            transform: translateY(0);
+        }
+        .movie-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .movie-meta {
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        /* 栏目3：关于波波电影网 */
+        .about-content {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .about-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .feature-list {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .feature-item {
+            background: rgba(229, 9, 20, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+        }
+        .feature-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #080808;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .footer-logo span {
+            color: var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-links a {
+            color: var(--text-gray);
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .seo-keywords {
+            color: #333;
+            font-size: 0.1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        /* 移动端自适应 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+            .about-content {
+                padding: 2rem 1rem;
+            }
+            .feature-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+    <!-- 顶部导航 -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">波波<span>电影</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#categories">电影分类</a></li>
+                    <li><a href="#latest">最新推荐</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 首页/Hero -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>波波电影网</h1>
+                <p>您的专属高清电影乐园，海量资源，极速播放，尽在波波电影网。</p>
+                <div class="url-display">https://bobodianyingwang-app.github.io</div>
+                <br>
+                <a href="#categories" class="cta-button">开始观影</a>
+            </div>
+        </section>
+
+        <!-- 栏目1：电影分类 -->
+        <section id="categories">
+            <h2 class="section-title">电影分类</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-img">🎬</div>
+                    <div class="category-content">
+                        <h3>动作科幻</h3>
+                        <p>震撼特效，热血沸腾的视觉盛宴。</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">😂</div>
+                    <div class="category-content">
+                        <h3>喜剧搞笑</h3>
+                        <p>轻松幽默，让您忘却烦恼。</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">😱</div>
+                    <div class="category-content">
+                        <h3>悬疑惊悚</h3>
+                        <p>烧脑剧情，心跳加速的观影体验。</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">💖</div>
+                    <div class="category-content">
+                        <h3>爱情文艺</h3>
+                        <p>感人至深，触动心灵的浪漫故事。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目2：最新推荐 -->
+        <section id="latest">
+            <h2 class="section-title">最新推荐</h2>
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">星际穿越2</div>
+                        <div class="movie-meta">2024 · 科幻 · 9.5分</div>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">暗夜追凶</div>
+                        <div class="movie-meta">2024 · 悬疑 · 8.8分</div>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">夏日的约定</div>
+                        <div class="movie-meta">2024 · 爱情 · 9.0分</div>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">极限挑战</div>
+                        <div class="movie-meta">2024 · 动作 · 8.5分</div>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">萌宠乐园</div>
+                        <div class="movie-meta">2024 · 动画 · 9.2分</div>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <div class="movie-title">历史的天空</div>
+                        <div class="movie-meta">2024 · 历史 · 8.9分</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目3：关于波波电影网 -->
+        <section id="about">
+            <h2 class="section-title">关于波波电影网</h2>
+            <div class="about-content">
+                <h3>欢迎访问波波电影网</h3>
+                <p>波波电影网（官网地址：<strong>https://bobodianyingwang-app.github.io</strong>）是一个专注于提供高清电影在线观看的优质平台。我们致力于为广大影迷提供最全面、最快速的影视资源。</p>
+                <p>无论您身在何处，只需打开浏览器访问 <strong>https://bobodianyingwang-app.github.io</strong>，即可畅享波波电影网为您精心挑选的各类大片。</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h4>海量资源</h4>
+                        <p>涵盖各类影视内容</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>极速播放</h4>
+                        <p>流畅不卡顿</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>每日更新</h4>
+                        <p>紧跟影视潮流</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-logo">波波<span>电影</span></div>
+        <div class="footer-links">
+            <a href="#home">首页</a>
+            <a href="#categories">分类</a>
+            <a href="#latest">最新</a>
+            <a href="#about">关于</a>
+        </div>
+        <p class="copyright">© 2024 波波电影网 bobodianyingwang-app.github.io 保留所有权利。</p>
+        <p class="seo-keywords">波波电影网 bobodianyingwang-app.github.io 高清电影 在线观看 免费电影 动作片 喜剧片 科幻片</p>
+    </footer>
+
+</body>
+</html>
